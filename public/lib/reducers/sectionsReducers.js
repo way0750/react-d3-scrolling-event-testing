@@ -1,10 +1,6 @@
 export default function (previousState, action) {
   if (action.type === 'addSection') {
-    previousState[action.payload.index] = {
-      sectionDOM: action.payload.sectionDOM,
-      section: action.payload.section,
-      index: action.payload.index
-    };
+    previousState.push(action.payload);
     return previousState;
   } else if (!previousState) {
     return [];

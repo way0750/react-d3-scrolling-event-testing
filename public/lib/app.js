@@ -3,12 +3,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import mainReducer from './reducers/mainReducer.js';
 
-import Section from './sectionComponent/sectionComponent.js';
+import Section from './sectionComponent/plaintSectionComponent.js';
+import MyContact from './sectionComponent/myContact.js';
 
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 let store = createStore(mainReducer);
 
@@ -58,8 +59,8 @@ const App = React.createClass({
         there will be blood!
         {
           this.props.resume.map( (section, index) => {
-            let component = <Section section={section} key={index} index = {index}/>;
-            return (component);
+            // let component = <Section section={section} key={index} index = {index}/>;
+            return matchElement(section, index);
           } )
         }
       </div>
@@ -87,6 +88,14 @@ function updateSectionList(inViewNodeAmount) {
     type: 'deleteSection',
     payload: inViewNodeAmount
   };
+}
+
+function matchElement (section, index) {
+  if (section.catagoryName === 'contact') {
+    return <MyContact section = {section} key={index}/>;
+  } else {
+    return <Section  section = {section} key={index} />;
+  }
 }
 
 function mapDispatchToProps (dispatch) {
