@@ -1,0 +1,30 @@
+.sections {
+  /*background-color: yellow;*/
+  position: relative;
+  height: 20em;
+  width: 100%;
+  opacity: 0;
+  /*outline: solid red 1em;*/
+  margin-bottom: 10em;
+  margin-top: 10em;
+}
+
+@keyframes fancy {
+  from {
+    background-color: aqua;
+  }
+
+  to {
+    background-color: green;
+  }
+}
+
+.sectionsReveal {
+  /*animation-duration: 3s;
+  animation-name: fancy;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;*/
+  transition: all 1000ms ease-out; 
+  background-color: yellow;
+  opacity: 1;
+}
