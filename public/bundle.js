@@ -20309,13 +20309,33 @@ var _mainReducer = require('./reducers/mainReducer.js');
 
 var _mainReducer2 = _interopRequireDefault(_mainReducer);
 
-var _plaintSectionComponent = require('./sectionComponent/plaintSectionComponent.js');
+var _blankSectionComponent = require('./sectionComponent/blankSectionComponent.js');
 
-var _plaintSectionComponent2 = _interopRequireDefault(_plaintSectionComponent);
+var _blankSectionComponent2 = _interopRequireDefault(_blankSectionComponent);
 
 var _myContact = require('./sectionComponent/myContact.js');
 
 var _myContact2 = _interopRequireDefault(_myContact);
+
+var _projectSectionComponent = require('./sectionComponent/projectSectionComponent/projectSectionComponent.js');
+
+var _projectSectionComponent2 = _interopRequireDefault(_projectSectionComponent);
+
+var _myTechSectionComponent = require('./sectionComponent/myTechSectionComponent.js');
+
+var _myTechSectionComponent2 = _interopRequireDefault(_myTechSectionComponent);
+
+var _codeSampleSectionComponent = require('./sectionComponent/codeSampleSectionComponent.js');
+
+var _codeSampleSectionComponent2 = _interopRequireDefault(_codeSampleSectionComponent);
+
+var _educationSectionComponent = require('./sectionComponent/educationSectionComponent.js');
+
+var _educationSectionComponent2 = _interopRequireDefault(_educationSectionComponent);
+
+var _personalSectionComponent = require('./sectionComponent/personalSectionComponent.js');
+
+var _personalSectionComponent2 = _interopRequireDefault(_personalSectionComponent);
 
 var _reactRedux = require('react-redux');
 
@@ -20327,6 +20347,11 @@ var store = (0, _redux.createStore)(_mainReducer2.default);
 
 var App = _react2.default.createClass({
   displayName: 'App',
+  getInitialState: function getInitialState() {
+    return {
+      scrollEventAlreadySet: false
+    };
+  },
   findInViewElements: function findInViewElements(cb) {
     var inViewNodeAmount = 0;
     var stat, sectionObj;
@@ -20360,10 +20385,13 @@ var App = _react2.default.createClass({
 
     nodeAmount = this.findInViewElements(addClassToEle);
     this.props.updateSectionList(nodeAmount);
-    window.addEventListener('scroll', function () {
-      nodeAmount = _this2.findInViewElements(addClassToEle);
-      _this2.props.updateSectionList(nodeAmount);
-    });
+    if (this.state.scrollEventAlreadySet === false) {
+      this.state.scrollEventAlreadySet = true;
+      window.addEventListener('scroll', function () {
+        nodeAmount = _this2.findInViewElements(addClassToEle);
+        _this2.props.updateSectionList(nodeAmount);
+      });
+    }
   },
   render: function render() {
     return _react2.default.createElement(
@@ -20371,7 +20399,6 @@ var App = _react2.default.createClass({
       null,
       'there will be blood!',
       this.props.resume.map(function (section, index) {
-        // let component = <Section section={section} key={index} index = {index}/>;
         return matchElement(section, index);
       })
     );
@@ -20403,8 +20430,18 @@ function updateSectionList(inViewNodeAmount) {
 function matchElement(section, index) {
   if (section.catagoryName === 'contact') {
     return _react2.default.createElement(_myContact2.default, { section: section, key: index });
+  } else if (section.catagoryName === 'projects') {
+    return _react2.default.createElement(_projectSectionComponent2.default, { section: section, key: index });
+  } else if (section.catagoryName === 'myTech') {
+    return _react2.default.createElement(_myTechSectionComponent2.default, { section: section, key: index });
+  } else if (section.catagoryName === 'codeSample') {
+    return _react2.default.createElement(_codeSampleSectionComponent2.default, { section: section, key: index });
+  } else if (section.catagoryName === 'education') {
+    return _react2.default.createElement(_educationSectionComponent2.default, { section: section, key: index });
+  } else if (section.catagoryName === 'personal') {
+    return _react2.default.createElement(_personalSectionComponent2.default, { section: section, key: index });
   } else {
-    return _react2.default.createElement(_plaintSectionComponent2.default, { section: section, key: index });
+    return _react2.default.createElement(_blankSectionComponent2.default, { section: section, key: index });
   }
 }
 
@@ -20415,15 +20452,15 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-var AAA = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(App);
+var ConnectedApp = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(App);
 
 _reactDom2.default.render(_react2.default.createElement(
   _reactRedux.Provider,
   { store: store },
-  _react2.default.createElement(AAA, null)
+  _react2.default.createElement(ConnectedApp, null)
 ), document.getElementById("content"));
 
-},{"./httpRequest/axios.min.js":181,"./reducers/mainReducer.js":182,"./sectionComponent/myContact.js":185,"./sectionComponent/plaintSectionComponent.js":186,"react":169,"react-dom":2,"react-redux":5,"redux":175}],181:[function(require,module,exports){
+},{"./httpRequest/axios.min.js":181,"./reducers/mainReducer.js":182,"./sectionComponent/blankSectionComponent.js":185,"./sectionComponent/codeSampleSectionComponent.js":186,"./sectionComponent/educationSectionComponent.js":187,"./sectionComponent/myContact.js":188,"./sectionComponent/myTechSectionComponent.js":189,"./sectionComponent/personalSectionComponent.js":190,"./sectionComponent/projectSectionComponent/projectSectionComponent.js":192,"react":169,"react-dom":2,"react-redux":5,"redux":175}],181:[function(require,module,exports){
 (function (process){
 "use strict";
 
@@ -20770,8 +20807,8 @@ var _redux = require('redux');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var MyContact = _react2.default.createClass({
-  displayName: 'MyContact',
+var Section = _react2.default.createClass({
+  displayName: 'Section',
   componentDidMount: function componentDidMount() {
     this.DOMnode = _reactDom2.default.findDOMNode(this);
     // d3.select(DOMnode).classed({'section': true});
@@ -20779,7 +20816,7 @@ var MyContact = _react2.default.createClass({
   },
   playAnimation: function playAnimation() {
     var node = d3.select(this.DOMnode);
-    node.transition().style({ 'background-color': 'blue', opacity: 1 }).duration(2000).transition().style({ 'background-color': 'red' }).duration(3000);
+    node.classed({ sectionsReveal: true });
   },
   render: function render() {
     return _react2.default.createElement(
@@ -20788,13 +20825,7 @@ var MyContact = _react2.default.createClass({
       _react2.default.createElement(
         'h1',
         null,
-        this.props.section.catagoryName,
-        'so this is the fucking contact section????'
-      ),
-      _react2.default.createElement(
-        'div',
-        null,
-        this.props.section.catagoryHeading
+        ' this is blank '
       )
     );
   }
@@ -20825,7 +20856,7 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(MyContact);
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Section);
 
 },{"react":169,"react-dom":2,"react-redux":5,"redux":175}],186:[function(require,module,exports){
 'use strict';
@@ -20866,12 +20897,299 @@ var Section = _react2.default.createClass({
       _react2.default.createElement(
         'h1',
         null,
-        this.props.section.catagoryName
+        this.props.section.catagoryHeading
+      ),
+      this.props.section.code.map(function (codeObj) {
+        return _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'div',
+            null,
+            codeObj.description
+          ),
+          _react2.default.createElement(
+            'time',
+            null,
+            codeObj.link
+          )
+        );
+      })
+    );
+  }
+});
+
+function addSection(sectionDOM, sectionComponent) {
+  return {
+    type: 'addSection',
+    payload: {
+      sectionDOM: sectionDOM,
+      section: sectionComponent
+    }
+  };
+}
+
+//should add the component and its dom node to a list once it gets mounted
+//just so d3 can access it
+
+function mapStateToProps(state) {
+  return {
+    state: state
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return (0, _redux.bindActionCreators)({
+    addSection: addSection
+  }, dispatch);
+}
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Section);
+
+},{"react":169,"react-dom":2,"react-redux":5,"redux":175}],187:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _reactRedux = require('react-redux');
+
+var _redux = require('redux');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Section = _react2.default.createClass({
+  displayName: 'Section',
+  componentDidMount: function componentDidMount() {
+    this.DOMnode = _reactDom2.default.findDOMNode(this);
+    // d3.select(DOMnode).classed({'section': true});
+    this.props.addSection(this.DOMnode, this);
+  },
+  playAnimation: function playAnimation() {
+    var node = d3.select(this.DOMnode);
+    node.classed({ sectionsReveal: true });
+  },
+  render: function render() {
+    return _react2.default.createElement(
+      'div',
+      { className: 'sections' },
+      _react2.default.createElement(
+        'h1',
+        null,
+        ' Education '
+      ),
+      this.props.section.school.map(function (schoolObj) {
+        return _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'h1',
+            null,
+            schoolObj.schoolName
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            schoolObj.education
+          ),
+          _react2.default.createElement(
+            'time',
+            null,
+            schoolObj.year
+          )
+        );
+      })
+    );
+  }
+});
+
+function addSection(sectionDOM, sectionComponent) {
+  return {
+    type: 'addSection',
+    payload: {
+      sectionDOM: sectionDOM,
+      section: sectionComponent
+    }
+  };
+}
+
+//should add the component and its dom node to a list once it gets mounted
+//just so d3 can access it
+
+function mapStateToProps(state) {
+  return {
+    state: state
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return (0, _redux.bindActionCreators)({
+    addSection: addSection
+  }, dispatch);
+}
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Section);
+
+},{"react":169,"react-dom":2,"react-redux":5,"redux":175}],188:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _reactRedux = require('react-redux');
+
+var _redux = require('redux');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var MyContact = _react2.default.createClass({
+  displayName: 'MyContact',
+  componentDidMount: function componentDidMount() {
+    this.DOMnode = _reactDom2.default.findDOMNode(this);
+    // d3.select(DOMnode).classed({'section': true});
+    this.props.addSection(this.DOMnode, this);
+  },
+  playAnimation: function playAnimation() {
+    var node = d3.select(this.DOMnode);
+    node.transition().style({ 'background-color': 'blue', opacity: 1 }).duration(1000);
+
+    node.classed({ "myContactAnimation": true });
+  },
+  render: function render() {
+    return _react2.default.createElement(
+      'div',
+      { className: 'sections' },
+      _react2.default.createElement(
+        'h1',
+        null,
+        this.props.section.catagoryName,
+        'so this is the fucking contact section????'
       ),
       _react2.default.createElement(
         'div',
         null,
         this.props.section.catagoryHeading
+      ),
+      _react2.default.createElement(
+        'ul',
+        { className: 'contactInfo' },
+        _react2.default.createElement(
+          'li',
+          null,
+          this.props.section.data.firstName
+        ),
+        _react2.default.createElement(
+          'li',
+          null,
+          this.props.section.data.lastName
+        ),
+        _react2.default.createElement(
+          'li',
+          null,
+          this.props.section.data.linkedin
+        )
+      )
+    );
+  }
+});
+
+function addSection(sectionDOM, sectionComponent) {
+  return {
+    type: 'addSection',
+    payload: {
+      sectionDOM: sectionDOM,
+      section: sectionComponent
+    }
+  };
+}
+
+//should add the component and its dom node to a list once it gets mounted
+//just so d3 can access it
+
+function mapStateToProps(state) {
+  return {};
+}
+
+function mapDispatchToProps(dispatch) {
+  return (0, _redux.bindActionCreators)({
+    addSection: addSection
+  }, dispatch);
+}
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(MyContact);
+
+},{"react":169,"react-dom":2,"react-redux":5,"redux":175}],189:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _reactRedux = require('react-redux');
+
+var _redux = require('redux');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Section = _react2.default.createClass({
+  displayName: 'Section',
+  componentDidMount: function componentDidMount() {
+    this.DOMnode = _reactDom2.default.findDOMNode(this);
+    // d3.select(DOMnode).classed({'section': true});
+    this.props.addSection(this.DOMnode, this);
+  },
+  playAnimation: function playAnimation() {
+    var node = d3.select(this.DOMnode);
+    node.classed({ sectionsReveal: true });
+  },
+  render: function render() {
+    return _react2.default.createElement(
+      'div',
+      { className: 'sections' },
+      _react2.default.createElement(
+        'h1',
+        null,
+        ' Some of the technologies I have used:'
+      ),
+      _react2.default.createElement(
+        'ul',
+        null,
+        _react2.default.createElement(
+          'li',
+          null,
+          Object.keys(this.props.section.strong)
+        ),
+        _react2.default.createElement(
+          'li',
+          null,
+          Object.keys(this.props.section.experienced)
+        )
       )
     );
   }
@@ -20904,4 +21222,266 @@ function mapDispatchToProps(dispatch) {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Section);
 
-},{"react":169,"react-dom":2,"react-redux":5,"redux":175}]},{},[180,181,182,183,184,185,186]);
+},{"react":169,"react-dom":2,"react-redux":5,"redux":175}],190:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _reactRedux = require('react-redux');
+
+var _redux = require('redux');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Section = _react2.default.createClass({
+  displayName: 'Section',
+  componentDidMount: function componentDidMount() {
+    this.DOMnode = _reactDom2.default.findDOMNode(this);
+    // d3.select(DOMnode).classed({'section': true});
+    this.props.addSection(this.DOMnode, this);
+  },
+  playAnimation: function playAnimation() {
+    var node = d3.select(this.DOMnode);
+    node.classed({ sectionsReveal: true });
+  },
+  render: function render() {
+    return _react2.default.createElement(
+      'div',
+      { className: 'sections' },
+      _react2.default.createElement(
+        'h1',
+        null,
+        ' some fun stuff about me:'
+      ),
+      _react2.default.createElement(
+        'ul',
+        null,
+        _react2.default.createElement(
+          'li',
+          null,
+          'used to do a lot of ball room dance'
+        ),
+        _react2.default.createElement(
+          'li',
+          null,
+          'grew up in a souther chinese village, like one that you would see in the national graphic doucumentary: rice farm everywhere animals all over place in the village. Got my citizenship back in 2006'
+        ),
+        _react2.default.createElement(
+          'li',
+          null,
+          'Studied in Germany and that really changed my life!'
+        )
+      )
+    );
+  }
+});
+
+function addSection(sectionDOM, sectionComponent) {
+  return {
+    type: 'addSection',
+    payload: {
+      sectionDOM: sectionDOM,
+      section: sectionComponent
+    }
+  };
+}
+
+//should add the component and its dom node to a list once it gets mounted
+//just so d3 can access it
+
+function mapStateToProps(state) {
+  return {
+    state: state
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return (0, _redux.bindActionCreators)({
+    addSection: addSection
+  }, dispatch);
+}
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Section);
+
+},{"react":169,"react-dom":2,"react-redux":5,"redux":175}],191:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _reactRedux = require('react-redux');
+
+var _redux = require('redux');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Section = _react2.default.createClass({
+  displayName: 'Section',
+  componentDidMount: function componentDidMount() {
+    // this.DOMnode = ReactDOM.findDOMNode(this);
+    // console.log('this is the indie project, did mount', this.props.indieProject.name);
+    // this.props.addSection(this.DOMnode, this);
+  },
+  playAnimation: function playAnimation() {
+    var node = d3.select(this.DOMnode);
+    node.classed({ sectionsReveal: true });
+  },
+
+  // name: 'minsweeper',
+  //       description: 'aksf aufhjk jdhjk hajhj adjfhajkh  sjkh asjhk sdajkh sdakhjsf',
+  //       pic: 'link to pic'
+
+  render: function render() {
+    return _react2.default.createElement(
+      'div',
+      { className: 'sectionsReveal' },
+      _react2.default.createElement(
+        'h1',
+        null,
+        ' ',
+        this.props.indieProject.name,
+        ' '
+      ),
+      _react2.default.createElement(
+        'div',
+        null,
+        ' ',
+        this.props.indieProject.description,
+        ' '
+      )
+    );
+  }
+});
+
+function addSection(sectionDOM, sectionComponent) {
+  return {
+    type: 'addSection',
+    payload: {
+      sectionDOM: sectionDOM,
+      section: sectionComponent
+    }
+  };
+}
+
+//should add the component and its dom node to a list once it gets mounted
+//just so d3 can access it
+
+function mapStateToProps(state) {
+  return {
+    state: state
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return (0, _redux.bindActionCreators)({
+    addSection: addSection
+  }, dispatch);
+}
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Section);
+
+},{"react":169,"react-dom":2,"react-redux":5,"redux":175}],192:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _reactRedux = require('react-redux');
+
+var _redux = require('redux');
+
+var _individualProjectComponent = require('./individualProjectComponent.js');
+
+var _individualProjectComponent2 = _interopRequireDefault(_individualProjectComponent);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Section = _react2.default.createClass({
+  displayName: 'Section',
+  componentDidMount: function componentDidMount() {
+    this.DOMnode = _reactDom2.default.findDOMNode(this);
+    // d3.select(DOMnode).classed({'section': true});
+    console.log('this is the project did mount');
+    this.props.addSection(this.DOMnode, this);
+  },
+  playAnimation: function playAnimation() {
+    var node = d3.select(this.DOMnode);
+    node.classed({ sectionsReveal: true });
+  },
+  render: function render() {
+    return _react2.default.createElement(
+      'div',
+      { className: 'sections' },
+      _react2.default.createElement(
+        'h1',
+        null,
+        this.props.section.catagoryName
+      ),
+      _react2.default.createElement(
+        'div',
+        null,
+        this.props.section.catagoryHeading
+      ),
+      this.props.section.projects.map(function (projectObj) {
+        return _react2.default.createElement(_individualProjectComponent2.default, { indieProject: projectObj });
+      })
+    );
+  }
+});
+
+function addSection(sectionDOM, sectionComponent) {
+  return {
+    type: 'addSection',
+    payload: {
+      sectionDOM: sectionDOM,
+      section: sectionComponent
+    }
+  };
+}
+
+//should add the component and its dom node to a list once it gets mounted
+//just so d3 can access it
+
+function mapStateToProps(state) {
+  return {
+    state: state
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return (0, _redux.bindActionCreators)({
+    addSection: addSection
+  }, dispatch);
+}
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Section);
+
+},{"./individualProjectComponent.js":191,"react":169,"react-dom":2,"react-redux":5,"redux":175}]},{},[180,181,182,183,184,185,186,187,188,189,190,191,192]);

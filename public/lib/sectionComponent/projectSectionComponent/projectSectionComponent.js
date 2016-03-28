@@ -3,12 +3,14 @@ import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
+import IndieProject from './individualProjectComponent.js';
 
 const Section = React.createClass({
 
   componentDidMount () {
     this.DOMnode = ReactDOM.findDOMNode(this);
     // d3.select(DOMnode).classed({'section': true});
+    console.log('this is the project did mount');
     this.props.addSection(this.DOMnode, this);
   },
 
@@ -26,6 +28,9 @@ const Section = React.createClass({
         <div>
           {this.props.section.catagoryHeading}
         </div>
+        {this.props.section.projects.map( (projectObj) => {
+          return (<IndieProject indieProject={projectObj}/>);
+        } )}
       </div>);
   }
 });

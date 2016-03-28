@@ -3,8 +3,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import mainReducer from './reducers/mainReducer.js';
 
-import Section from './sectionComponent/plaintSectionComponent.js';
+import Section from './sectionComponent/blankSectionComponent.js';
 import MyContact from './sectionComponent/myContact.js';
+import Project from './sectionComponent/projectSectionComponent/projectSectionComponent.js';
+import MyTech from './sectionComponent/myTechSectionComponent.js';
+import CodeSample from './sectionComponent/codeSampleSectionComponent.js';
+import Education from './sectionComponent/educationSectionComponent.js';
+import Personal from './sectionComponent/personalSectionComponent.js';
 
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
@@ -14,6 +19,12 @@ import { bindActionCreators } from 'redux';
 let store = createStore(mainReducer);
 
 const App = React.createClass({
+  getInitialState () {
+    return {
+      scrollEventAlreadySet: false
+    };
+  },
+
   findInViewElements (cb) {
     var inViewNodeAmount = 0;
     var stat, sectionObj;
@@ -39,7 +50,6 @@ const App = React.createClass({
   },
 
   componentDidUpdate () {
-
     var addClassToEle = function (sectionComponent) {
       setTimeout(sectionComponent.playAnimation, 0);
     };
@@ -47,10 +57,13 @@ const App = React.createClass({
 
     nodeAmount = this.findInViewElements(addClassToEle);
     this.props.updateSectionList(nodeAmount);
-    window.addEventListener('scroll', () => {
-      nodeAmount = this.findInViewElements(addClassToEle);
-      this.props.updateSectionList(nodeAmount);
-    });
+    if (this.state.scrollEventAlreadySet === false) {
+      this.state.scrollEventAlreadySet = true;
+      window.addEventListener('scroll', () => {
+        nodeAmount = this.findInViewElements(addClassToEle);
+        this.props.updateSectionList(nodeAmount);
+      });
+    }
   },
 
   render () {
@@ -59,7 +72,6 @@ const App = React.createClass({
         there will be blood!
         {
           this.props.resume.map( (section, index) => {
-            // let component = <Section section={section} key={index} index = {index}/>;
             return matchElement(section, index);
           } )
         }
@@ -91,8 +103,18 @@ function updateSectionList(inViewNodeAmount) {
 }
 
 function matchElement (section, index) {
-  if (section.catagoryName === 'contact') {
+    if (section.catagoryName === 'contact') {
     return <MyContact section = {section} key={index}/>;
+  } else if (section.catagoryName === 'projects') {
+    return <Project  section = {section} key={index}/>;
+  } else if (section.catagoryName === 'myTech') {
+    return <MyTech  section = {section} key={index} />;
+  } else if (section.catagoryName === 'codeSample') {
+    return <CodeSample  section = {section} key={index} />;
+  } else if (section.catagoryName === 'education') {
+    return <Education  section = {section} key={index} />;
+  } else if (section.catagoryName === 'personal') {
+    return <Personal  section = {section} key={index} />;
   } else {
     return <Section  section = {section} key={index} />;
   }
@@ -105,11 +127,11 @@ function mapDispatchToProps (dispatch) {
   }, dispatch);
 }
 
-const AAA = connect(mapStateToProps, mapDispatchToProps)(App);
+const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(App);
 
 ReactDOM.render(
   <Provider store={store}>
-    <AAA />
+    <ConnectedApp />
   </Provider>,
   document.getElementById("content")
 );

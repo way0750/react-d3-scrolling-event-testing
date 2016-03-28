@@ -1,7 +1,7 @@
 .sections {
   /*background-color: yellow;*/
   position: relative;
-  height: 20em;
+  min-height: 20em;
   width: 100%;
   opacity: 0;
   margin-bottom: 10em;
@@ -24,6 +24,18 @@
   animation-iteration-count: infinite;
   animation-direction: alternate;*/
   transition: all 1000ms ease-out; 
-  background-color: yellow;
+  outline: 1px red solid;
   opacity: 1;
+}
+
+
+.myContactAnimation {
+  animation-duration: 3s;
+  animation-name: fancy;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+ul {
+  list-style: none;
 }

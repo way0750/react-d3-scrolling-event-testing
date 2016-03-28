@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
 
-const MyContact = React.createClass({
+const Section = React.createClass({
 
   componentDidMount () {
     this.DOMnode = ReactDOM.findDOMNode(this);
@@ -14,27 +14,16 @@ const MyContact = React.createClass({
 
   playAnimation () {
     var node = d3.select(this.DOMnode);
-    node.transition()
-        .style({'background-color': 'blue', opacity: 1})
-        .duration(1000);
-    
-    node.classed({"myContactAnimation": true});
-},
+    node.classed({sectionsReveal: true});
+  },
 
   render () {
     return (
       <div className='sections'>
-        <h1>
-          {this.props.section.catagoryName}
-          so this is the fucking contact section????
-        </h1>
-        <div>
-          {this.props.section.catagoryHeading}
-        </div>
-        <ul className="contactInfo">
-          <li>{this.props.section.data.firstName}</li>
-          <li>{this.props.section.data.lastName}</li>
-          <li>{this.props.section.data.linkedin}</li>
+        <h1> Some of the technologies I have used:</h1>
+        <ul>
+          <li>{Object.keys(this.props.section.strong)}</li>
+          <li>{Object.keys(this.props.section.experienced)}</li>
         </ul>
       </div>);
   }
@@ -55,6 +44,7 @@ function addSection (sectionDOM, sectionComponent) {
 
 function mapStateToProps (state) {
   return {
+    state: state
   };
 }
 
@@ -64,4 +54,4 @@ function mapDispatchToProps (dispatch) {
   }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MyContact);
+export default connect(mapStateToProps, mapDispatchToProps)(Section);

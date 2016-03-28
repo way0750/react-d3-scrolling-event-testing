@@ -47,11 +47,15 @@ resume.push({
 // algorithm/code sample
 resume.push({
   catagoryName: 'codeSample',
-  catagoryHeading: 'code sample, how I code:',
+  catagoryHeading: 'some of my code sample:',
   code:[
   {
     description: 'these are some popular sorting algorithm that I implemented',
-    link: 'gitHub liknk right here'
+    link: 'gitHub link right here'
+  },
+  {
+    description: 'there are some popular data structure that I implemented',
+    link: 'gitHub link right here'
   }
   ]
   //underscore.js data structure...
@@ -65,6 +69,11 @@ resume.push({
     schoolName: 'University of Potsdam',
     education: 'certificate for...',
     year: '2011 to 2011'
+  },
+  {
+    schoolName: 'University of California at Santa Barbara',
+    education: 'Sociology',
+    year: '2008 to 2011'
   }
   ]
 });
