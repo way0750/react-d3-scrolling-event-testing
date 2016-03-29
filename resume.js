@@ -50,7 +50,7 @@ resume.push({
 
 resume.push({
   catagoryName: 'myTech',
-  catagoryHeading: 'Some of the technologies that I work with',
+  catagoryHeading: 'Tech Stack',
   techStackPic: 'allMyTech.png'
 });
 

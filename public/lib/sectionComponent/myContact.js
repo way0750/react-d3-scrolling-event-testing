@@ -28,8 +28,10 @@ const MyContact = React.createClass({
         <div className="summary">
           <div className="circle">
           </div>
-          I am looking for oppotunity, Am I the front-end developer you are looking for?
+          Am I the front-end developer you are looking for? :
           I can develope full-stack application, but I am more of a front-end person.
+          I am JavaScript engineer specialized in developing web applications with modern web frameworks.
+          
         </div>
         <h2>CONTACT:</h2>
         <ul className="contactInfo">

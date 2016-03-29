@@ -20403,12 +20403,7 @@ var App = _react2.default.createClass({
       null,
       this.props.resume.map(function (section, index) {
         return matchElement(section, index);
-      }),
-      _react2.default.createElement(
-        'a',
-        { href: 'mailto:way0750huang@gmail.com', className: 'lastWords' },
-        'Contact Me @: way0750huang@gmail.com'
-      )
+      })
     );
   }
 });
@@ -21109,7 +21104,7 @@ var MyContact = _react2.default.createClass({
         'div',
         { className: 'summary' },
         _react2.default.createElement('div', { className: 'circle' }),
-        'I am looking for oppotunity, Am I the front-end developer you are looking for? I can develope full-stack application, but I am more of a front-end person.'
+        'Am I the front-end developer you are looking for? : I can develope full-stack application, but I am more of a front-end person. I am JavaScript engineer specialized in developing web applications with modern web frameworks.'
       ),
       _react2.default.createElement(
         'h2',

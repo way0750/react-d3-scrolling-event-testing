@@ -332,13 +332,3 @@ ul {
 }
 
 
-
-/*last words*/
-.lastWords{
-  clear: both;
-  text-indent: 2em;
-  font-weight: 100;
-  font-size: 1.5em;
-  text-decoration: none;
-  color: #666666;
-}
