@@ -8,7 +8,6 @@ const Section = React.createClass({
 
   componentDidMount () {
     this.DOMnode = ReactDOM.findDOMNode(this);
-    // d3.select(DOMnode).classed({'section': true});
     this.props.addSection(this.DOMnode, this);
   },
 
@@ -19,14 +18,17 @@ const Section = React.createClass({
 
   render () {
     return (
-      <div className='sections'>
-        <h1> Education </h1>
+      <div className='sections educationSection'>
+        <h1 className = "educationSectionTitle"> Education </h1>
         {this.props.section.school.map( (schoolObj) => {
           return (
-              <div>
-                <h1>{schoolObj.schoolName}</h1>
-                <div>{schoolObj.education}</div>
-                <time>{schoolObj.year}</time>
+              <div className="indieEducation">
+                <div className="educationStat">
+                  <h1>{schoolObj.schoolName}</h1>
+                  <div>{schoolObj.education}</div>
+                  <time>{schoolObj.year}</time>
+                </div>
+                <img className="schoolPic" src={'assets/education/' + schoolObj.schoolPic} />
               </div>
             );
         } )}

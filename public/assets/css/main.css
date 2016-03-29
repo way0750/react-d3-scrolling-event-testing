@@ -132,6 +132,7 @@ ul {
 /*project related css*/
 
 .projectSectionTitle {
+  color: #4db3b3;
   text-align: center;
   font-size: 2.5em;
   font-weight: 100;
@@ -159,7 +160,6 @@ ul {
   font-weight: 100;
   text-align: right;
   margin-right: 1em;
-  /*float: right;*/
 }
 
 .indieProjectName > h1 {
@@ -194,8 +194,6 @@ ul {
   opacity: 1;
 }
 
-
-
 .indieProjectPic {
   position: relative;
 }
@@ -220,4 +218,115 @@ ul {
 
 .indieProjectHoverPic > img {
   width: 100%;
+}
+
+
+
+
+/*my tech stack css:*/
+.techStack{
+  position: relative;
+  padding-top: 3em;
+}
+
+.techStackSectionTitle {
+  color: #b3b34d;
+  text-align: center;
+  font-size: 2.5em;
+  font-weight: 100;
+  clear: both;
+  margin-bottom: 1.5em;
+}
+
+.techStackPic{
+  width: 100%;
+}
+.techStackPic > img {
+  width: 74%;
+  margin: auto 13%;
+  transition: all 400ms;
+  filter: invert(100%);
+  -webkit-filter: invert(100%);
+}
+
+.techStackPic > img:hover {
+  transition: all 400ms;
+  filter: invert(0%);
+  -webkit-filter: invert(0%);
+}
+
+
+
+/*education css*/
+
+.educationSection{
+  position: relative;
+  padding-top: 3em;
+}
+
+.educationSectionTitle{
+  color: #0052cc;
+  text-align: center;
+  font-size: 2.5em;
+  font-weight: 100;
+  clear: both;
+  margin-bottom: 1.5em;
+  position: relative;
+}
+
+.indieEducation{
+  position: relative;
+  width: 70%;
+  margin-left: 15%;
+  margin-right: 15%;
+}
+
+.educationStat{
+  position: absolute;
+  padding-right: 1em;
+  padding-left: 1em;
+  max-width: 60%;
+  color: #F8F8F8;
+  background-color: rgba(144,144,144, 0.7) ;
+}
+
+.schoolPic{
+  width: 100%;
+}
+
+
+/*fun fact css*/
+.funFactSection{
+  width: 100%;
+  padding-top: 3em;  
+}
+
+.funFactTitle{
+  width: 100%;
+  text-align: center;
+  font-size: 2.5em;
+  font-weight: 100;
+  margin-bottom: 0.5em;
+  color: #999900;
+}
+
+.funFactsList{
+  padding: 5px;
+  padding-bottom: 1.5em;
+  margin-bottom: 0px;
+  width: 50%;
+  float: right;
+  clear: both;
+  border-left: 0.5px black solid;
+}
+
+.fact{
+  width: 100%;
+}
+
+.fact > h4 {
+  color: grey;
+  font-weight: 100;
+  font-size: 1.4em;
+  width: 80%;
 }

@@ -51,7 +51,7 @@ resume.push({
 resume.push({
   catagoryName: 'myTech',
   catagoryHeading: 'Some of the technologies that I work with',
-  techStack: 'link to that pic with all the technologies that I work with'
+  techStackPic: 'allMyTech.png'
 });
 
 // algorithm/code sample
@@ -77,25 +77,40 @@ resume.push({
   catagoryHeading: 'Education',
   school: [
   {
-    schoolName: 'University of Potsdam',
+    schoolName: 'University of Potsdam in Germany',
     education: 'Certificate for German Language and Culture',
-    year: '2011 to 2011'
+    year: '2011 to 2011',
+    schoolPic: 'up.jpg'
   },
   {
     schoolName: 'University of California at Santa Barbara',
     education: 'B.A. Sociology',
-    year: '2008 to 2011'
+    year: '2008 to 2011',
+    schoolPic: 'ucsb.jpg'
   }
   ]
 });
 
 resume.push({
   catagoryName: 'personal',
-  catagoryHeading: 'Some fun facts about me',
+  catagoryHeading: 'Some Fun Stuffs',
   factList: [
-    "Used to do a lot of ball room dance: salsa and swing. Might go back to it in the future",
-    "Grew up in a Souther Chinese village, like the ones you would see in the National Graphic Documentary: rice farm everywhere, animals all over place, kids running without shoes in the village. Got my US citizenship back in 2006",
-    "Studied in Germany and that really changed my life!",
+    {
+      fact: "► Grew up in a Souther Chinese village, like the ones you would see National Graphic Documentaries.",
+      pic: 'village.jpg'
+    },
+    {
+      fact: "► Used to do a lot of ball room dance: salsa and swing. Might go back to it in the future",
+      pic: 'dance.jpg'
+    },
+    {
+      fact: '► Got my US citizenship back in 2006',
+      pic: 'america.jpg'
+    },
+    {
+      fact: "► Studied in Germany and that really changed my life!",
+      pic: 'germany.jpg'
+    }
   ]
 });
 

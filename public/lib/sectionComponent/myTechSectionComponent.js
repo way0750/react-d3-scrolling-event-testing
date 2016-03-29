@@ -8,7 +8,6 @@ const Section = React.createClass({
 
   componentDidMount () {
     this.DOMnode = ReactDOM.findDOMNode(this);
-    // d3.select(DOMnode).classed({'section': true});
     this.props.addSection(this.DOMnode, this);
   },
 
@@ -20,8 +19,10 @@ const Section = React.createClass({
   render () {
     return (
       <div className='sections techStack'>
-        <h1> Some of the technologies I have used:</h1>
-        <div>{this.props.section.techStack}</div>
+        <h1 className="techStackSectionTitle"> {this.props.section.catagoryHeading}</h1>
+        <div className="techStackPic">
+          <img src={'assets/'+this.props.section.techStackPic} />
+        </div>
       </div>);
   }
 });

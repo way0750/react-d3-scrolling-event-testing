@@ -20974,7 +20974,6 @@ var Section = _react2.default.createClass({
   displayName: 'Section',
   componentDidMount: function componentDidMount() {
     this.DOMnode = _reactDom2.default.findDOMNode(this);
-    // d3.select(DOMnode).classed({'section': true});
     this.props.addSection(this.DOMnode, this);
   },
   playAnimation: function playAnimation() {
@@ -20984,31 +20983,36 @@ var Section = _react2.default.createClass({
   render: function render() {
     return _react2.default.createElement(
       'div',
-      { className: 'sections' },
+      { className: 'sections educationSection' },
       _react2.default.createElement(
         'h1',
-        null,
+        { className: 'educationSectionTitle' },
         ' Education '
       ),
       this.props.section.school.map(function (schoolObj) {
         return _react2.default.createElement(
           'div',
-          null,
-          _react2.default.createElement(
-            'h1',
-            null,
-            schoolObj.schoolName
-          ),
+          { className: 'indieEducation' },
           _react2.default.createElement(
             'div',
-            null,
-            schoolObj.education
+            { className: 'educationStat' },
+            _react2.default.createElement(
+              'h1',
+              null,
+              schoolObj.schoolName
+            ),
+            _react2.default.createElement(
+              'div',
+              null,
+              schoolObj.education
+            ),
+            _react2.default.createElement(
+              'time',
+              null,
+              schoolObj.year
+            )
           ),
-          _react2.default.createElement(
-            'time',
-            null,
-            schoolObj.year
-          )
+          _react2.default.createElement('img', { className: 'schoolPic', src: 'assets/education/' + schoolObj.schoolPic })
         );
       })
     );
@@ -21185,7 +21189,6 @@ var Section = _react2.default.createClass({
   displayName: 'Section',
   componentDidMount: function componentDidMount() {
     this.DOMnode = _reactDom2.default.findDOMNode(this);
-    // d3.select(DOMnode).classed({'section': true});
     this.props.addSection(this.DOMnode, this);
   },
   playAnimation: function playAnimation() {
@@ -21198,13 +21201,14 @@ var Section = _react2.default.createClass({
       { className: 'sections techStack' },
       _react2.default.createElement(
         'h1',
-        null,
-        ' Some of the technologies I have used:'
+        { className: 'techStackSectionTitle' },
+        ' ',
+        this.props.section.catagoryHeading
       ),
       _react2.default.createElement(
         'div',
-        null,
-        this.props.section.techStack
+        { className: 'techStackPic' },
+        _react2.default.createElement('img', { src: 'assets/' + this.props.section.techStackPic })
       )
     );
   }
@@ -21272,20 +21276,24 @@ var Section = _react2.default.createClass({
   render: function render() {
     return _react2.default.createElement(
       'div',
-      { className: 'sections' },
+      { className: 'sections funFactSection' },
       _react2.default.createElement(
         'h1',
-        null,
-        ' some fun stuff about me:'
+        { className: 'funFactTitle' },
+        this.props.section.catagoryHeading
       ),
       _react2.default.createElement(
         'ul',
-        null,
-        this.props.section.factList.map(function (str) {
+        { className: 'funFactsList' },
+        this.props.section.factList.map(function (factObj) {
           return _react2.default.createElement(
             'li',
-            null,
-            str
+            { className: 'fact' },
+            _react2.default.createElement(
+              'h4',
+              null,
+              factObj.fact
+            )
           );
         })
       )

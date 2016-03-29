@@ -19,11 +19,15 @@ const Section = React.createClass({
 
   render () {
     return (
-      <div className='sections'>
-        <h1> some fun stuff about me:</h1>
-        <ul>
-          {this.props.section.factList.map( (str) => {
-            return <li>{ str }</li>;
+      <div className='sections funFactSection'>
+        <h1 className="funFactTitle">{this.props.section.catagoryHeading}</h1>
+        <ul className='funFactsList'>
+          {this.props.section.factList.map( (factObj) => {
+            return (
+              <li className="fact">
+                <h4>{factObj.fact}</h4>
+              </li>
+              );
           } )}
         </ul>
       </div>);
