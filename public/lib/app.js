@@ -76,6 +76,7 @@ const App = React.createClass({
             return matchElement(section, index);
           } )
         }
+        <a href="mailto:way0750huang@gmail.com" className="lastWords">Contact Me @: way0750huang@gmail.com</a>
       </div>
     );
   }

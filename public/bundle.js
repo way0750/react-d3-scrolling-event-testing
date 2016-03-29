@@ -20403,7 +20403,12 @@ var App = _react2.default.createClass({
       null,
       this.props.resume.map(function (section, index) {
         return matchElement(section, index);
-      })
+      }),
+      _react2.default.createElement(
+        'a',
+        { href: 'mailto:way0750huang@gmail.com', className: 'lastWords' },
+        'Contact Me @: way0750huang@gmail.com'
+      )
     );
   }
 });
