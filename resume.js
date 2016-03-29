@@ -96,11 +96,11 @@ resume.push({
   catagoryHeading: 'Some Fun Stuffs',
   factList: [
     {
-      fact: "► Grew up in a Souther Chinese village, like the ones you would see National Graphic Documentaries.",
+      fact: "► Grew up in a Souther Chinese village, like the ones you would see in National Graphic Documentaries.",
       pic: 'village.jpg'
     },
     {
-      fact: "► Used to do a lot of ball room dance: salsa and swing. Might go back to it in the future",
+      fact: "► Used to do a lot of ball room dance: salsa and swing. Might go back to them in the future",
       pic: 'dance.jpg'
     },
     {
