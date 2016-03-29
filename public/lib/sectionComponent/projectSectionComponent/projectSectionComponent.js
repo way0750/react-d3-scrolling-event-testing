@@ -9,8 +9,6 @@ const Section = React.createClass({
 
   componentDidMount () {
     this.DOMnode = ReactDOM.findDOMNode(this);
-    // d3.select(DOMnode).classed({'section': true});
-    console.log('this is the project did mount');
     this.props.addSection(this.DOMnode, this);
   },
 
@@ -21,13 +19,10 @@ const Section = React.createClass({
 
   render () {
     return (
-      <div className='sections'>
-        <h1>
-          {this.props.section.catagoryName}
-        </h1>
-        <div>
+      <div className='sections projectSection'>
+        <h1 className='projectSectionTitle'>
           {this.props.section.catagoryHeading}
-        </div>
+        </h1>
         {this.props.section.projects.map( (projectObj) => {
           return (<IndieProject indieProject={projectObj}/>);
         } )}

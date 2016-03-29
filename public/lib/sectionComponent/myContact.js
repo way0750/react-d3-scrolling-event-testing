@@ -8,33 +8,39 @@ const MyContact = React.createClass({
 
   componentDidMount () {
     this.DOMnode = ReactDOM.findDOMNode(this);
-    // d3.select(DOMnode).classed({'section': true});
     this.props.addSection(this.DOMnode, this);
   },
 
   playAnimation () {
     var node = d3.select(this.DOMnode);
-    node.transition()
-        .style({'background-color': 'blue', opacity: 1})
-        .duration(1000);
-    
-    node.classed({"myContactAnimation": true});
+    node.classed({"myContact": true});
 },
 
   render () {
     return (
-      <div className='sections'>
-        <h1>
-          {this.props.section.catagoryName}
-          so this is the fucking contact section????
-        </h1>
-        <div>
-          {this.props.section.catagoryHeading}
+      <div className='sections contact'>
+        <div className="myName">
+          <h1>WAY</h1>
+          <h1>HUANG</h1>
         </div>
+
+        <h1 className="role">SOFTWARE ENGINEER</h1>
+        <div className="summary">
+          <div className="circle">
+          </div>
+          I am looking for oppotunity, Am I the front-end developer you are looking for?
+          I can develope full-stack application, but I am more of a front-end person.
+        </div>
+        <h2>CONTACT:</h2>
         <ul className="contactInfo">
-          <li>{this.props.section.data.firstName}</li>
-          <li>{this.props.section.data.lastName}</li>
-          <li>{this.props.section.data.linkedin}</li>
+          {this.props.section.data.map( (obj) => {
+            return (<li>
+              <a href={obj.link}>{obj.link}</a>
+            </li>);
+          } )}
+          <li>
+            <a href="mailto:way0750huang@gmail.com">way0750huang@gmail.com</a>
+          </li>
         </ul>
       </div>);
   }

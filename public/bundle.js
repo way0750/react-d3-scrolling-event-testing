@@ -20352,6 +20352,9 @@ var App = _react2.default.createClass({
       scrollEventAlreadySet: false
     };
   },
+
+
+  //to find all the elements that are in view and animate them.
   findInViewElements: function findInViewElements(cb) {
     var inViewNodeAmount = 0;
     var stat, sectionObj;
@@ -20359,8 +20362,11 @@ var App = _react2.default.createClass({
     for (var i = 0; i < this.props.section.length; i++) {
       sectionObj = this.props.section[i];
       stat = sectionObj.sectionDOM.getBoundingClientRect();
-      if (stat.top < windowHeight * 0.5 || stat.bottom < windowHeight) {
-        cb(sectionObj.section);
+      if (stat.top < windowHeight * 0.4 || stat.bottom < windowHeight) {
+        // cb(sectionObj.section);
+        (function (sectionComponent) {
+          setTimeout(sectionComponent.playAnimation, 0);
+        })(sectionObj.section);
         inViewNodeAmount++;
       } else {
         //end iteraction at first element that is not in view;
@@ -20378,17 +20384,15 @@ var App = _react2.default.createClass({
   componentDidUpdate: function componentDidUpdate() {
     var _this2 = this;
 
-    var addClassToEle = function addClassToEle(sectionComponent) {
-      setTimeout(sectionComponent.playAnimation, 0);
-    };
     var nodeAmount = 0;
 
-    nodeAmount = this.findInViewElements(addClassToEle);
+    nodeAmount = this.findInViewElements();
     this.props.updateSectionList(nodeAmount);
     if (this.state.scrollEventAlreadySet === false) {
       this.state.scrollEventAlreadySet = true;
       window.addEventListener('scroll', function () {
-        nodeAmount = _this2.findInViewElements(addClassToEle);
+        //animating elements:
+        nodeAmount = _this2.findInViewElements();
         _this2.props.updateSectionList(nodeAmount);
       });
     }
@@ -20397,7 +20401,6 @@ var App = _react2.default.createClass({
     return _react2.default.createElement(
       'div',
       null,
-      'there will be blood!',
       this.props.resume.map(function (section, index) {
         return matchElement(section, index);
       })
@@ -21064,47 +21067,68 @@ var MyContact = _react2.default.createClass({
   displayName: 'MyContact',
   componentDidMount: function componentDidMount() {
     this.DOMnode = _reactDom2.default.findDOMNode(this);
-    // d3.select(DOMnode).classed({'section': true});
     this.props.addSection(this.DOMnode, this);
   },
   playAnimation: function playAnimation() {
     var node = d3.select(this.DOMnode);
-    node.transition().style({ 'background-color': 'blue', opacity: 1 }).duration(1000);
-
-    node.classed({ "myContactAnimation": true });
+    node.classed({ "myContact": true });
   },
   render: function render() {
     return _react2.default.createElement(
       'div',
-      { className: 'sections' },
+      { className: 'sections contact' },
+      _react2.default.createElement(
+        'div',
+        { className: 'myName' },
+        _react2.default.createElement(
+          'h1',
+          null,
+          'WAY'
+        ),
+        _react2.default.createElement(
+          'h1',
+          null,
+          'HUANG'
+        )
+      ),
       _react2.default.createElement(
         'h1',
-        null,
-        this.props.section.catagoryName,
-        'so this is the fucking contact section????'
+        { className: 'role' },
+        'SOFTWARE ENGINEER'
       ),
       _react2.default.createElement(
         'div',
+        { className: 'summary' },
+        _react2.default.createElement('div', { className: 'circle' }),
+        'I am looking for oppotunity, Am I the front-end developer you are looking for? I can develope full-stack application, but I am more of a front-end person.'
+      ),
+      _react2.default.createElement(
+        'h2',
         null,
-        this.props.section.catagoryHeading
+        'CONTACT:'
       ),
       _react2.default.createElement(
         'ul',
         { className: 'contactInfo' },
+        this.props.section.data.map(function (obj) {
+          return _react2.default.createElement(
+            'li',
+            null,
+            _react2.default.createElement(
+              'a',
+              { href: obj.link },
+              obj.link
+            )
+          );
+        }),
         _react2.default.createElement(
           'li',
           null,
-          this.props.section.data.firstName
-        ),
-        _react2.default.createElement(
-          'li',
-          null,
-          this.props.section.data.lastName
-        ),
-        _react2.default.createElement(
-          'li',
-          null,
-          this.props.section.data.linkedin
+          _react2.default.createElement(
+            'a',
+            { href: 'mailto:way0750huang@gmail.com' },
+            'way0750huang@gmail.com'
+          )
         )
       )
     );
@@ -21171,25 +21195,16 @@ var Section = _react2.default.createClass({
   render: function render() {
     return _react2.default.createElement(
       'div',
-      { className: 'sections' },
+      { className: 'sections techStack' },
       _react2.default.createElement(
         'h1',
         null,
         ' Some of the technologies I have used:'
       ),
       _react2.default.createElement(
-        'ul',
+        'div',
         null,
-        _react2.default.createElement(
-          'li',
-          null,
-          Object.keys(this.props.section.strong)
-        ),
-        _react2.default.createElement(
-          'li',
-          null,
-          Object.keys(this.props.section.experienced)
-        )
+        this.props.section.techStack
       )
     );
   }
@@ -21266,21 +21281,13 @@ var Section = _react2.default.createClass({
       _react2.default.createElement(
         'ul',
         null,
-        _react2.default.createElement(
-          'li',
-          null,
-          'used to do a lot of ball room dance'
-        ),
-        _react2.default.createElement(
-          'li',
-          null,
-          'grew up in a souther chinese village, like one that you would see in the national graphic doucumentary: rice farm everywhere animals all over place in the village. Got my citizenship back in 2006'
-        ),
-        _react2.default.createElement(
-          'li',
-          null,
-          'Studied in Germany and that really changed my life!'
-        )
+        this.props.section.factList.map(function (str) {
+          return _react2.default.createElement(
+            'li',
+            null,
+            str
+          );
+        })
       )
     );
   }
@@ -21336,37 +21343,46 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Section = _react2.default.createClass({
   displayName: 'Section',
-  componentDidMount: function componentDidMount() {
-    // this.DOMnode = ReactDOM.findDOMNode(this);
-    // console.log('this is the indie project, did mount', this.props.indieProject.name);
-    // this.props.addSection(this.DOMnode, this);
-  },
   playAnimation: function playAnimation() {
     var node = d3.select(this.DOMnode);
     node.classed({ sectionsReveal: true });
   },
-
-  // name: 'minsweeper',
-  //       description: 'aksf aufhjk jdhjk hajhj adjfhajkh  sjkh asjhk sdajkh sdakhjsf',
-  //       pic: 'link to pic'
-
   render: function render() {
     return _react2.default.createElement(
       'div',
-      { className: 'sectionsReveal' },
+      { className: 'sectionsReveal indieProject' },
       _react2.default.createElement(
-        'h1',
-        null,
-        ' ',
-        this.props.indieProject.name,
-        ' '
+        'div',
+        { className: 'indieProjectStat' },
+        _react2.default.createElement(
+          'div',
+          { className: 'indieProjectName' },
+          _react2.default.createElement(
+            'h1',
+            null,
+            this.props.indieProject.name
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'indieProjectSubtitle' },
+            this.props.indieProject.description
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'indieProjectTech' },
+          _react2.default.createElement('img', { src: "assets/projectPics/" + this.props.indieProject.techPicName })
+        )
       ),
       _react2.default.createElement(
         'div',
-        null,
-        ' ',
-        this.props.indieProject.description,
-        ' '
+        { className: 'indieProjectPic' },
+        _react2.default.createElement('img', { src: "assets/projectPics/" + this.props.indieProject.bottomPic, className: 'indieProjectButtonPic' }),
+        _react2.default.createElement(
+          'a',
+          { href: this.props.indieProject.linkToProject, className: 'indieProjectHoverPic' },
+          _react2.default.createElement('img', { src: "assets/projectPics/" + this.props.indieProject.hoverPic })
+        )
       )
     );
   }
@@ -21428,8 +21444,6 @@ var Section = _react2.default.createClass({
   displayName: 'Section',
   componentDidMount: function componentDidMount() {
     this.DOMnode = _reactDom2.default.findDOMNode(this);
-    // d3.select(DOMnode).classed({'section': true});
-    console.log('this is the project did mount');
     this.props.addSection(this.DOMnode, this);
   },
   playAnimation: function playAnimation() {
@@ -21439,15 +21453,10 @@ var Section = _react2.default.createClass({
   render: function render() {
     return _react2.default.createElement(
       'div',
-      { className: 'sections' },
+      { className: 'sections projectSection' },
       _react2.default.createElement(
         'h1',
-        null,
-        this.props.section.catagoryName
-      ),
-      _react2.default.createElement(
-        'div',
-        null,
+        { className: 'projectSectionTitle' },
         this.props.section.catagoryHeading
       ),
       this.props.section.projects.map(function (projectObj) {

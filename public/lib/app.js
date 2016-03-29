@@ -25,6 +25,7 @@ const App = React.createClass({
     };
   },
 
+  //to find all the elements that are in view and animate them.
   findInViewElements (cb) {
     var inViewNodeAmount = 0;
     var stat, sectionObj;
@@ -32,13 +33,16 @@ const App = React.createClass({
     for (var i = 0; i < this.props.section.length; i++) {
       sectionObj = this.props.section[i];
       stat = sectionObj.sectionDOM.getBoundingClientRect();
-      if (stat.top < windowHeight * 0.5 || stat.bottom < windowHeight) {
-        cb(sectionObj.section);
+      if (stat.top < windowHeight * 0.4 || stat.bottom < windowHeight) {
+        // cb(sectionObj.section);
+        (function (sectionComponent) {
+          setTimeout(sectionComponent.playAnimation, 0);
+        })(sectionObj.section);
         inViewNodeAmount++;
       } else {
         //end iteraction at first element that is not in view;
         return inViewNodeAmount;
-      } 
+      }
     }
   },
 
@@ -50,17 +54,15 @@ const App = React.createClass({
   },
 
   componentDidUpdate () {
-    var addClassToEle = function (sectionComponent) {
-      setTimeout(sectionComponent.playAnimation, 0);
-    };
     var nodeAmount = 0;
 
-    nodeAmount = this.findInViewElements(addClassToEle);
+    nodeAmount = this.findInViewElements();
     this.props.updateSectionList(nodeAmount);
     if (this.state.scrollEventAlreadySet === false) {
       this.state.scrollEventAlreadySet = true;
       window.addEventListener('scroll', () => {
-        nodeAmount = this.findInViewElements(addClassToEle);
+        //animating elements:
+        nodeAmount = this.findInViewElements();
         this.props.updateSectionList(nodeAmount);
       });
     }
@@ -69,7 +71,6 @@ const App = React.createClass({
   render () {
     return (
       <div>
-        there will be blood!
         {
           this.props.resume.map( (section, index) => {
             return matchElement(section, index);

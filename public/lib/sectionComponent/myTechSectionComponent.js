@@ -19,12 +19,9 @@ const Section = React.createClass({
 
   render () {
     return (
-      <div className='sections'>
+      <div className='sections techStack'>
         <h1> Some of the technologies I have used:</h1>
-        <ul>
-          <li>{Object.keys(this.props.section.strong)}</li>
-          <li>{Object.keys(this.props.section.experienced)}</li>
-        </ul>
+        <div>{this.props.section.techStack}</div>
       </div>);
   }
 });

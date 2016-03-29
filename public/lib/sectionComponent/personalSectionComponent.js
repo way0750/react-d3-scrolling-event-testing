@@ -22,9 +22,9 @@ const Section = React.createClass({
       <div className='sections'>
         <h1> some fun stuff about me:</h1>
         <ul>
-          <li>used to do a lot of ball room dance</li>
-          <li>grew up in a souther chinese village, like one that you would see in the national graphic doucumentary: rice farm everywhere animals all over place in the village. Got my citizenship back in 2006</li>
-          <li>Studied in Germany and that really changed my life!</li>
+          {this.props.section.factList.map( (str) => {
+            return <li>{ str }</li>;
+          } )}
         </ul>
       </div>);
   }
