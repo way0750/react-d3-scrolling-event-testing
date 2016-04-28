@@ -71,6 +71,7 @@ const App = React.createClass({
   render () {
     return (
       <div>
+
         {
           this.props.resume.map( (section, index) => {
             return matchElement(section, index);

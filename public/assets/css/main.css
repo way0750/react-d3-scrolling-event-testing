@@ -7,9 +7,15 @@ body{
   color: #666666;
 }
 
-body > * {
+body > #content {
   max-width: 70em;
   margin: auto auto;
+}
+
+.topLine {
+  background-image: url(../top.jpg);
+  height: 3em;
+  width: 100%;
 }
 
 h1{
